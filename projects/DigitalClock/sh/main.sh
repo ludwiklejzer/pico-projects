@@ -10,6 +10,15 @@ cleanup() {
 	exit
 }
 
+# calculate the sleep time to the next second accurately
+_sleep() {
+	# get the next nanoseconds
+	next=$(date +%s.%N | awk '{print int($1+1)}')
+	# get the current nanoseconds
+	now=$(date +%s.%N)
+	sleep "$(echo "$next-$now" | bc)"
+}
+
 center_text() {
 	text=$1
 	columns="$(tput cols)"
@@ -23,7 +32,7 @@ center_text() {
 	done
 }
 
-clear_screen() {
+_clear() {
 	# smootlhy fake clear
 	tput cuu "$(tput lines)"
 	currently_term_rows=$(tput lines)
@@ -46,16 +55,16 @@ get_hour() {
 	if command -v toilet >/dev/null; then
 		while true; do
 			time=$(date "$1" | toilet --font ascii9)
-			clear_screen
+			_clear
 			center_text "$time"
-			sleep 1
+			_sleep 1
 		done
 	else
 		while true; do
 			time=$(date "$1")
-			clear_screen
+			_clear
 			center_text "$time"
-			sleep 1
+			_sleep 1
 		done
 	fi
 }
