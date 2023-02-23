@@ -87,6 +87,11 @@ if [ "$1" = "-t" ]; then
 		echo "Invalid Option!"
 		;;
 	esac
+elif [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+	echo "Usage: digital-clock [option]"
+	echo ""
+	echo "-t [24|12]    select the time format"
+	echo "-h, --help    display this help and exit"
 else
 	get_hour "+%H:%M:%S"
 fi
