@@ -75,7 +75,7 @@ if [ "$1" = "-t" ]; then
 	case "$hour_type" in
 	"12")
 		if [ "$(date +%H)" -ge 12 ]; then
-			get_hour "+%r pm"
+			get_hour "+%rpm"
 		else
 			get_hour "+%ram"
 		fi
